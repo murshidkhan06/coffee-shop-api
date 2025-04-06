@@ -5,6 +5,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import uuid
 import pytest
+import boto3
 from moto import mock_dynamodb
 
 # Add project root to Python path for imports
@@ -12,6 +13,7 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 # Set environment variables for testing
 os.environ['PRODUCTS_TABLE'] = 'coffee-shop-api-products-test'
+os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'  # Set default region for boto3
 
 # Import functions
 from functions.create_product import handler as create_handler
@@ -24,7 +26,7 @@ from functions.delete_product import handler as delete_handler
 class TestProductFunctions(unittest.TestCase):
     def setUp(self):
         """Set up test environment"""
-        import boto3
+        # Ensure region is set
         self.dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
         
         # Create test table
