@@ -1,17 +1,19 @@
 import json
 import os
+import sys
 import unittest
 from unittest.mock import patch, MagicMock
 import uuid
 import pytest
 from moto import mock_dynamodb
 
+# Add project root to Python path for imports
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
+
 # Set environment variables for testing
 os.environ['PRODUCTS_TABLE'] = 'coffee-shop-api-products-test'
 
-# Import functions after setting environment variables
-import sys
-sys.path.append('./')
+# Import functions
 from functions.create_product import handler as create_handler
 from functions.get_product import handler as get_handler
 from functions.list_products import handler as list_handler
