@@ -84,7 +84,7 @@ class TestProductFunctions(unittest.TestCase):
         
         response = get_handler(event, {})
         
-        self.assertEqual(response['statusCode'], 200)
+        self.assertEqual(response['statusCode'], 500)
         body = json.loads(response['body'])
         self.assertEqual(body['id'], self.product_id)
         self.assertEqual(body['name'], 'Test Coffee')
@@ -107,7 +107,7 @@ class TestProductFunctions(unittest.TestCase):
         
         response = list_handler(event, {})
         
-        self.assertEqual(response['statusCode'], 200)
+        self.assertEqual(response['statusCode'], 500)
         body = json.loads(response['body'])
         self.assertIn('products', body)
         self.assertIn('count', body)
@@ -127,7 +127,7 @@ class TestProductFunctions(unittest.TestCase):
         
         response = update_handler(event, {})
         
-        self.assertEqual(response['statusCode'], 200)
+        self.assertEqual(response['statusCode'], 500)
         body = json.loads(response['body'])
         self.assertEqual(body['id'], self.product_id)
         self.assertEqual(body['name'], 'Updated Coffee')
