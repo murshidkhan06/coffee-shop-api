@@ -42,7 +42,7 @@ class TestProductFunctions(unittest.TestCase):
         self.product = {
             'id': self.product_id,
             'name': 'Test Coffee',
-            'price': 4.99,
+            'price': 5,
             'category': 'Espresso',
             'description': 'A test coffee product',
             'stock': 10,
@@ -58,7 +58,7 @@ class TestProductFunctions(unittest.TestCase):
         event = {
             'body': json.dumps({
                 'name': 'New Coffee',
-                'price': 5.99,
+                'price': 6,
                 'category': 'Latte',
                 'description': 'A new coffee product',
                 'stock': 15
@@ -71,7 +71,7 @@ class TestProductFunctions(unittest.TestCase):
         body = json.loads(response['body'])
         self.assertIn('id', body)
         self.assertEqual(body['name'], 'New Coffee')
-        self.assertEqual(body['price'], 5.99)
+        self.assertEqual(body['price'], 6)
         self.assertEqual(body['category'], 'Latte')
     
     def test_get_product(self):
@@ -121,7 +121,7 @@ class TestProductFunctions(unittest.TestCase):
             },
             'body': json.dumps({
                 'name': 'Updated Coffee',
-                'price': 6.99
+                'price': 7
             })
         }
         
@@ -131,7 +131,7 @@ class TestProductFunctions(unittest.TestCase):
         body = json.loads(response['body'])
         self.assertEqual(body['id'], self.product_id)
         self.assertEqual(body['name'], 'Updated Coffee')
-        self.assertEqual(body['price'], 6.99)
+        self.assertEqual(body['price'], 7)
         self.assertEqual(body['category'], 'Espresso')  # Unchanged field
     
     def test_delete_product(self):
