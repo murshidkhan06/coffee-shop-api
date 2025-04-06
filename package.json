@@ -1,0 +1,25 @@
+{
+  "name": "coffee-shop-api",
+  "version": "1.0.0",
+  "description": "coffee-shop-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murshidkhan06/coffee-shop-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/murshidkhan06/coffee-shop-api/issues"
+  },
+  "homepage": "https://github.com/murshidkhan06/coffee-shop-api#readme",
+  "devDependencies": {
+    "serverless": "^4.11.1",
+    "serverless-iam-roles-per-function": "^3.2.0",
+    "serverless-python-requirements": "^6.1.2"
+  }
+}

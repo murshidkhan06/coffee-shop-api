@@ -1,0 +1,91 @@
+service: coffee-shop-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 256
+  timeout: 10
+  environment:
+    PRODUCTS_TABLE: ${self:service}-products-${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: !GetAtt ProductsTable.Arn
+
+functions:
+  createProduct:
+    handler: functions/create_product.handler
+    events:
+      - http:
+          path: /products
+          method: post
+          cors: true
+
+  getProduct:
+    handler: functions/get_product.handler
+    events:
+      - http:
+          path: /products/{id}
+          method: get
+          cors: true
+
+  listProducts:
+    handler: functions/list_products.handler
+    events:
+      - http:
+          path: /products
+          method: get
+          cors: true
+
+  updateProduct:
+    handler: functions/update_product.handler
+    events:
+      - http:
+          path: /products/{id}
+          method: put
+          cors: true
+
+  deleteProduct:
+    handler: functions/delete_product.handler
+    events:
+      - http:
+          path: /products/{id}
+          method: delete
+          cors: true
+
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.PRODUCTS_TABLE}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+plugins:
+  - serverless-python-requirements
+  - serverless-iam-roles-per-function
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!.github/**'
+    - '!tests/**'
